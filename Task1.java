@@ -1,52 +1,62 @@
-# CODSOFT
-  
-//NAME: RUCHA CHAVAN
-//TASK 2: STUDENT GRADE CALCULATOR
-//CODSOFT INTERNSHIP
+//Task 1: Java program to generate random number and ask user to guess the number.
+//        Compare the user's guess with the generated number and provide feedback on whether the guess is correct, too high, or too low.
+// Codsoft Internship
+// Name: Rucha Chavan
 
 import java.util.Scanner;
-public class MarksCalculation {
+import java.util.Random;
+public class Main {
+    private static final int attempts = 10;
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+        int totalRounds = 0;
+        int totalAttempts = 0;
+        int totalWins = 0;
 
-        // number of subjects
-        System.out.print("Enter the number of subjects: ");
-        int n = scanner.nextInt();
+        boolean playAgain = true;
 
-        //storing marks for each subject
-        int[] marks = new int[n];
+        while (playAgain) {
+            int PCinput = rand.nextInt(1,100);
+            int no_of_guess = 0;
+            boolean hasWon = false;
 
-        // Get marks for each subject
-        for (int i = 0; i < n; i++) {
-            System.out.print("Enter marks of subject " + (i + 1) + ": ");
-            marks[i] = scanner.nextInt();
+            System.out.println("Guess the number between " +1 + " and " + 100 + ":");
+
+            while (no_of_guess < attempts) {
+                System.out.print("Enter your guess: ");
+                int UserGuess = sc.nextInt();
+                no_of_guess++;
+                totalAttempts++;
+
+                if (UserGuess == PCinput) {
+                    System.out.println("Congratulations! You've guessed the correct number!");
+                    hasWon = true;
+                    totalWins++;
+                    break;
+                } else if (UserGuess < PCinput) {
+                    System.out.println("Too low! ..... Guess the bigger number");
+                } else {
+                    System.out.println("Too high!........Guess the smaller number");
+                }
+            }
+
+            if (!hasWon) {
+                System.out.println("Sorry :( Your attempts are finished. The correct guess was " + PCinput);
+            }
+
+            totalRounds++;
+            System.out.println("Your score: " + totalWins + " wins out of " + totalAttempts + " rounds.");
+
+            System.out.print("Do you like to play again? (yes/no): ");
+            String response = sc.next();
+            playAgain = response.equalsIgnoreCase("yes");
         }
-        // Calculate total marks
-        int totalMarks = 0;
-        for (int i = 0; i < n; i++) {
-            totalMarks += marks[i];
-        }
 
-        // average percentage
-        float avgPer = (float) (totalMarks / n);
-
-        // grade based on average percentage
-        char grade;
-        if (avgPer >= 90) {
-            grade = 'A';
-        } else if (avgPer >= 80) {
-            grade = 'B';
-        } else if (avgPer >= 70) {
-            grade = 'C';
-        } else if (avgPer >= 60) {
-            grade = 'D';
-        } else {
-            grade = 'F';
-        }
-
-        // Displaying results
-        System.out.println("Total marks obtained: " + totalMarks);
-        System.out.println("Average percentage of your marks is : " + avgPer + "%");
-        System.out.println("Grade obtained: " + grade);
+        System.out.println(" Your final score: " + totalWins + " wins out of " + totalRounds + " rounds.");
+        sc.close();
     }
 }
+
+
